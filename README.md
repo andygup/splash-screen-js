@@ -4,6 +4,6 @@ Easy to use JavaScript splash screen this is 100% framework agnostic. You don't 
 
 Many thanks to the inspiration from [@ihatetomatoes](https://ihatetomatoes.net/create-custom-preloading-screen/).
 
-[Screenshot](splashscreen.gif)
+![Screenshot](splashscreen.gif)
 
 
