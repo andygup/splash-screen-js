@@ -4,12 +4,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
     <title>Simple Map</title>
-    <link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.3/esri/css/main.css">
     <style>
-        html, body, #map {
+        html, body, #viewDiv {
             height: 100%;
+            width: 100%;
             margin: 0;
-            padding: 0;
+            padding: 0;;
         }
 
         /*
@@ -103,42 +104,47 @@
 
 <body>
 
-<div id="loader-wrapper">
-    <div id="loader"></div>
-</div>
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+    </div>
 
-<div id="map"></div>
+    <div id="viewDiv"></div>
 
-<script src="https://js.arcgis.com/3.16/"></script>
-<script>
-    var map;
+    <script src="https://js.arcgis.com/4.3/"></script>
+    <script>
 
-    // Load our dark-gray map behind the splash screen!
-    require(["esri/map", "dojo/domReady!"], function(Map) {
-        map = new Map("map", {
-            basemap: "dark-gray",
-            center: [-122.45, 37.75], // lon, lat
-            zoom: 11
-        });
+        // Load our dark-gray map behind the splash screen!
+        require(["esri/Map", "esri/views/MapView", "dojo/domReady!"],
+            function(Map, MapView) {
 
-        // When the map is finished loading its tiles do some cool stuff!
-        map.on("update-end", function(){
-            console.log("Map is done loading.");
+                var map = new Map({
+                    basemap: "dark-gray"
+                });
 
-            // Get a reference to the loader's div
-            var loaderDiv = document.getElementById("loader-wrapper");
+                var view = new MapView({
+                    container: "viewDiv",
+                    map: map,
+                    zoom: 11,
+                    center: [-122.45, 37.75] // lon, lat
+                });
 
-            // When the transition ends remove loader's div from display
-            // so that we can access the map with gestures or clicks
-            loaderDiv.addEventListener("transitionend",function(){
-                loaderDiv.style.display = "none";
-            }, true);
+                view.then(function(){
+                    console.log("Map is done loading.");
 
-            // Kick off the CSS transition
-            loaderDiv.style.opacity = 0.0;
-        })
-    });
-</script>
+                    // Get a reference to the loader's div
+                    var loaderDiv = document.getElementById("loader-wrapper");
 
+                    // When the transition ends remove loader's div from display
+                    // so that we can access the map with gestures or clicks
+                    loaderDiv.addEventListener("transitionend",function(){
+                        loaderDiv.style.display = "none";
+                    }, true);
+
+                    // Kick off the CSS transition
+                    loaderDiv.style.opacity = 0.0;
+                });
+            });
+
+    </script>
 </body>
 </html>
